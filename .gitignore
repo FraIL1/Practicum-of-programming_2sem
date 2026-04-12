@@ -1,0 +1,22 @@
+# logs
+app.log
+
+# generated output
+result.json
+result.json
+
+# python cache
+__pycache__/
+*.pyc
+
+# virtual env
+venv/
+.env
+
+# pytest / coverage
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
