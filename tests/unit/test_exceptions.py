@@ -1,6 +1,6 @@
 import pytest
 from app.services.services import validate_record
-from app.core.core import ValidationError
+from app.core.core import InvalidTransactionError
 
 
 def test_invalid_data_raises_validation_error():
@@ -11,5 +11,5 @@ def test_invalid_data_raises_validation_error():
         "date": "2024-01-01",
     }
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(InvalidTransactionError):
         validate_record(record)
