@@ -5,7 +5,7 @@
 from collections import defaultdict
 from typing import Dict
 
-from app.core.core import Transaction, ValidationError
+from app.core.core import Transaction, InvalidTransactionError
 
 # Обязательные поля записи
 REQUIRED_FIELDS = {"id", "amount", "category", "date"}
@@ -20,19 +20,19 @@ def validate_record(record: Dict) -> Transaction:
     """
 
     if not isinstance(record, dict):
-        raise ValidationError("Запись должна быть словарем")
+        raise InvalidTransactionError("Запись должна быть словарем")
 
     missing = REQUIRED_FIELDS - record.keys()
     if missing:
-        raise ValidationError(f"Отсутствуют поля: {missing}")
+        raise InvalidTransactionError(f"Отсутствуют поля: {missing}")
 
     try:
         amount = float(record["amount"])
     except (ValueError, TypeError):
-        raise ValidationError("Поле amount должно быть числом")
+        raise InvalidTransactionError("Поле amount должно быть числом")
 
     if amount <= 0:
-        raise ValidationError("Поле amount должно быть больше 0")
+        raise InvalidTransactionError("Поле amount должно быть больше 0")
 
     return Transaction(
         transaction_id=str(record["id"]),

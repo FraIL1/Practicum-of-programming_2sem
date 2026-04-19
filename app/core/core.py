@@ -21,15 +21,17 @@ class CurrencyMismatchError(BaseAppError):
     """Ошибка несоответствия валют"""
 
 
+class InvalidTransactionError(ValidationError):
+    """Ошибка некорректной транзакции"""
+
+
 @dataclass
 class Transaction:
     """
     Представляет валидированную финансовую транзакцию
     """
+
     transaction_id: str
     amount: float
     category: str
     date: str
-
-
-InvalidTransactionError = ValidationError
