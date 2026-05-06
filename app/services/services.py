@@ -48,16 +48,18 @@ class Aggregator:
     """
 
     def __init__(self) -> None:
-        self._data: Dict[str, float] = defaultdict(float)
+        # автоматически создает новую категорию с 0.0 при первом обращении
+        self.data: Dict[str, float] = defaultdict(float)
 
     def add(self, transaction: Transaction) -> None:
         """
         Добавляет транзакцию в агрегированные данные
         """
-        self._data[transaction.category] += transaction.amount
+        # Увеличиваем сумму для категории транзакции
+        self.data[transaction.category] += transaction.amount
 
     def result(self) -> Dict[str, float]:
         """
         Возвращает итоговую агрегацию
         """
-        return dict(self._data)
+        return dict(self.data)

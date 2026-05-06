@@ -19,12 +19,13 @@ class CSVReader:
         """
         try:
             with file_path.open("r", encoding="utf-8") as file:
+                # Читаем CSV как список словарей, где заголовки — ключи
                 reader = csv.DictReader(file)
                 return list(reader)
         except Exception as exc:
             raise DataFormatError(
                 f"Ошибка чтения CSV: {file_path.name}"
-            ) from exc
+                ) from exc
 
 
 class JSONReader:
@@ -46,7 +47,7 @@ class JSONReader:
         except Exception as exc:
             raise DataFormatError(
                 f"Ошибка чтения JSON: {file_path.name}"
-            ) from exc
+                ) from exc
 
 
 def get_reader(file_path: Path) -> Optional[Union[CSVReader, JSONReader]]:

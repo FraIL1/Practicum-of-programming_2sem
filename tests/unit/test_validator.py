@@ -1,3 +1,8 @@
+"""
+Параметризованные тесты валидатора
+Проверяет: корректные/некорректные суммы, пропущенные поля, тип аргумента
+"""
+
 import pytest
 from app.services.services import validate_record
 from app.core.core import InvalidTransactionError
@@ -20,6 +25,7 @@ from app.core.core import InvalidTransactionError
     ],
 )
 def test_validate_amount(amount, is_valid):
+    """Параметрический тест: проверяем разные варианты суммы"""
     record = {
         "id": "1",
         "amount": amount,
@@ -29,17 +35,19 @@ def test_validate_amount(amount, is_valid):
 
     if is_valid:
         result = validate_record(record)
-        assert result.amount > 0
+        assert result.amount > 0  # Валидная сумма всегда > 0
     else:
         with pytest.raises(InvalidTransactionError):
             validate_record(record)
 
 
 def test_missing_fields(invalid_record_missing_field):
+    """Фикстура: запись без поля date → ошибка валидации"""
     with pytest.raises(InvalidTransactionError):
         validate_record(invalid_record_missing_field)
 
 
 def test_not_dict():
+    """Передан не словарь → ошибка валидации"""
     with pytest.raises(InvalidTransactionError):
         validate_record(["not", "a", "dict"])
